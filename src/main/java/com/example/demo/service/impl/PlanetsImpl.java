@@ -22,6 +22,7 @@ public class PlanetsImpl implements IPlanetsService {
     @Override
     public Long createPlanet(PlanetsDto planetsDto) {
 
+        planetsDto.setStatus(false);
         PlanetsEntity entity = planetsRepository.save(
                 modelMapper.map(planetsDto, PlanetsEntity.class)
         );

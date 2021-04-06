@@ -28,13 +28,14 @@ public class UserController {
         return ResponseEntity.ok(userService.appointRuler(rulesId, planetsId));
     }
 
-    @PutMapping("/remove/ruler/{id}")
+    @PutMapping("/{rulesId}/remove/ruler/{planetsId}")
     @ApiOperation(value = "Remove the post of ruler",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> removeRuler(
-            @PathVariable("id") @NotNull Long planetsId
+            @PathVariable("rulesId") @NotNull Long rulesId,
+            @PathVariable("planetsId") @NotNull Long planetsId
     ) {
-        return ResponseEntity.ok(userService.removeRuler(planetsId));
+        return ResponseEntity.ok(userService.removeRuler(rulesId, planetsId));
     }
 
     @PutMapping

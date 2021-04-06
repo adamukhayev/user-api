@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exeptions.GeneralTestApiException;
 import com.example.demo.exeptions.TestApiError;
+import com.example.demo.model.Status;
 import com.example.demo.model.dto.PlanetsDto;
 import com.example.demo.model.dto.RulesDto;
 import com.example.demo.model.entity.RulesEntity;
@@ -28,6 +29,7 @@ public class RulesImpl implements IRulesService {
     @Override
     public Long createRules(RulesDto rulesDto) {
 
+        rulesDto.setIsActive(Status.INACTIVE);
         RulesEntity entity = rulesRepository.save(
                 modelMapper.map(rulesDto, RulesEntity.class)
         );

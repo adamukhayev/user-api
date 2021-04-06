@@ -9,5 +9,5 @@ public interface IUserService {
 
     Long deletePlanet(Long id);
 
-    Long removeRuler(Long planetsId);
+    Long removeRuler(Long rulesId, Long planetsId);
 }
