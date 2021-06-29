@@ -99,30 +99,3 @@ CREATE TABLE main.customer
     answer_text VARCHAR
 
 )
-
--- CREATE SEQUENCE IF NOT EXISTS  main.survey_operation_survey_operation_id_seq
---     START WITH 100
---     INCREMENT BY 1
---     NO MINVALUE
---     NO MAXVALUE
---     CACHE 1;
-
--- CREATE TABLE main.survey_operation (
---     survey_operation_id INTEGER DEFAULT nextval('main.survey_operation_survey_operation_id'::regclass) NOT NULL,
---     action VARCHAR NOT NULL ,
---     survey_id INTEGER ,
---     admin_id INTEGER ,
---     customer_id INTEGER ,
---     question_id INTEGER ,
---     answer_id INTEGER ,
---     create_date TIMESTAMP NOT NULL
---
---         CONSTRAINT survey_operation_pk PRIMARY KEY (survey_operation_id),
---     CONSTRAINT fk_user_id_user
---         FOREIGN KEY (user_id)
---             REFERENCES main.users (user_id),
---     CONSTRAINT fk_user_id_user
---         FOREIGN KEY (survey_id)
---         REFERENCES main.question (survey_id)
---
--- )
