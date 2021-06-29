@@ -1,5 +1,7 @@
 package com.example.demo.controller.authentication;
 
+import com.example.demo.model.Role;
+import com.example.demo.model.Status;
 import com.example.demo.model.auth.AuthenticationDto;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entity.UserEntity;
@@ -86,8 +88,8 @@ public class AuthenticationRestController {
         entity.setEmail(userDto.getEmail());
         entity.setPassword(BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt(12)));
         entity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
-        entity.setIsActive(userDto.getIsActive());
-        entity.setRole(userDto.getRole());
+        entity.setIsActive(Status.ACTIVE);
+        entity.setRole(Role.ADMIN);
 
         userRepository.save(entity);
     }

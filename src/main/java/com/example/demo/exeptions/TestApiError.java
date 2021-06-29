@@ -1,9 +1,18 @@
 package com.example.demo.exeptions;
 
 public enum TestApiError {
-    ALL_PLANETS_ARE_BUSY,
-    THE_PLANET_DOES_NOT_EXIST,
-    RULER_DOES_NOT_EXIST,
-    THE_PLANET_HAS_ITS_RULER,
-    PLANETS_NO_RULER
+    E500_NOT_FOUND("Not found"),
+    E500_QUESTION_NOT_FOUND("Question not found"),
+    E500_ANSWER_NOT_FOUND("Answer not found");
+
+    private final String text;
+
+    TestApiError(final String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

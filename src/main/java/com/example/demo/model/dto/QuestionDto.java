@@ -1,30 +1,31 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.model.Status;
+import com.example.demo.model.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RulesDto {
+public class QuestionDto {
 
-    private Long rulesId;
+    private Long questionId;
 
     @NotBlank
-    private String name;
+    private String title;
 
-    @NotNull
-    private Integer age;
+    @NotBlank
+    private String question;
 
-    private Status isActive;
+    private Long surveyId;
 
-    private List<PlanetsDto> planetsDto;
+    private TypeEnum questionType;
+
+    private List<AnswerDto> answer;
 }

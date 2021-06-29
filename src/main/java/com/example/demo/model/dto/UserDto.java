@@ -1,7 +1,5 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.model.Role;
-import com.example.demo.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -26,9 +24,4 @@ public class UserDto {
     @NotNull
     private Date createDate;
 
-    @NotBlank
-    private Status isActive;
-
-    @NotBlank
-    private Role role;
 }

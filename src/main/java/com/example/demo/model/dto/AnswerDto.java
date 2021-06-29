@@ -6,20 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PlanetsDto {
+public class AnswerDto {
 
-    private Long planetsId;
-
-    private Long rulesId;
+    private Long answerId;
 
     @NotBlank
-    private String nameOfThePlanet;
+    private String answerText;
 
-    private boolean status;
+    @NotNull
+    private Long questionId;
 }
