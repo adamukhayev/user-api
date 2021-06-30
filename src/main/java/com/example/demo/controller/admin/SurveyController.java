@@ -21,14 +21,14 @@ public class SurveyController {
     private final ISurveyService surveyService;
 
     @PostMapping("/add/survey")
-    @ApiOperation(value = "Adding question",
+    @ApiOperation(value = "(Admin)Adding question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> addSurvey(@RequestBody @Valid SurveyDto surveyDto) {
         return ResponseEntity.ok(surveyService.addSurvey(surveyDto));
     }
 
     @DeleteMapping("/remove/{surveyId}")
-    @ApiOperation(value = "Remove question",
+    @ApiOperation(value = "(Admin)Remove question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> removeSurvey(
             @RequestParam @NotNull Long surveyId
@@ -37,7 +37,7 @@ public class SurveyController {
     }
 
     @PutMapping("/update/{surveyId}")
-    @ApiOperation(value = "Update question",
+    @ApiOperation(value = "(Admin)Update question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> updateSurvey(
             @RequestBody @NotNull SurveyDto surveyDto) {

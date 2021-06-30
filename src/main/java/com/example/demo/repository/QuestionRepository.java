@@ -15,5 +15,7 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 
     List<QuestionEntity> findAllByQuestionId(Long questionId);
 
+    List<QuestionEntity> findAllBySurveyIdAndQuestionId(Long surveyId, Long questionId);
+
     List<QuestionEntity> findAllBySurveyId(Long surveyId);
 }

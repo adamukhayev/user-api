@@ -19,4 +19,8 @@ public interface AnswerRepository extends PagingAndSortingRepository<AnswerEntit
     void deleteByAnswerId(Long answerId);
 
     List<AnswerEntity> findAllByAnswerId(Long answerId);
+
+    List<AnswerEntity> findAllByAnswerIdAndQuestionId(Long answerId, Long questionId);
+
+    AnswerEntity findByAnswerIdAndQuestionId(Long answerId, Long questionId);
 }

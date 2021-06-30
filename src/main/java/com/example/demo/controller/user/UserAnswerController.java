@@ -1,6 +1,6 @@
 package com.example.demo.controller.user;
 
-import com.example.demo.model.dto.SurveyDto;
+import com.example.demo.model.dto.ResponseDto;
 import com.example.demo.service.ICustomerService;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class UserAnswerController {
 
     @GetMapping
     @ApiOperation(value = "Get result")
-    public List<SurveyDto> getResult(@RequestParam(name = "userId") @NotNull Long userId) {
+    public List<ResponseDto> getResult(@RequestParam(name = "userId") @NotNull Long userId) {
         return customerService.getResult(userId);
     }
 }

@@ -22,14 +22,14 @@ public class AnswerController {
     private final IAnswerService answerService;
 
     @PostMapping("/add/answer")
-    @ApiOperation(value = "Adding question",
+    @ApiOperation(value = "(Admin)Adding question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> addAnswer(@RequestBody @Valid AnswerDto answerDto) {
         return ResponseEntity.ok(answerService.addAnswer(answerDto));
     }
 
     @DeleteMapping("/remove/{answerId}")
-    @ApiOperation(value = "Remove answer",
+    @ApiOperation(value = "(Admin)Remove answer",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> removeAnswer(
             @RequestParam @NotNull Long answerId
@@ -47,7 +47,7 @@ public class AnswerController {
     }
 
     @PostMapping("/add/all/save")
-    @ApiOperation(value = "Adding question",
+    @ApiOperation(value = "(Admin)Adding question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Void> addAllQuestion(@RequestBody @Valid List<AnswerDto> answerDto) {
         answerService.allSaveAnswer(answerDto);

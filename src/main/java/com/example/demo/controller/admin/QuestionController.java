@@ -22,14 +22,14 @@ public class QuestionController {
     private final IQuestionService questionService;
 
     @PostMapping("/add/question")
-    @ApiOperation(value = "Adding question",
+    @ApiOperation(value = "(Admin)Adding question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> addQuestion(@RequestBody @Valid QuestionDto questionDto) {
         return ResponseEntity.ok(questionService.addQuestion(questionDto));
     }
 
     @DeleteMapping("/remove/{questionId}")
-    @ApiOperation(value = "Remove question",
+    @ApiOperation(value = "(Admin)Remove question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> removeQuestion(
             @RequestParam @NotNull Long questionId
@@ -38,7 +38,7 @@ public class QuestionController {
     }
 
     @PutMapping("/update/{questionId}")
-    @ApiOperation(value = "Update question",
+    @ApiOperation(value = "(Admin)Update question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Long> updateQuestion(
             @RequestBody @Valid QuestionDto questionDto
@@ -47,7 +47,7 @@ public class QuestionController {
     }
 
     @PostMapping("/add/all/save")
-    @ApiOperation(value = "Adding question",
+    @ApiOperation(value = "(Admin)Adding question",
             authorizations = {@Authorization(value = "jwtToken")})
     public ResponseEntity<Void> addAllQuestion(@RequestBody @Valid List<QuestionDto> questionDto) {
         questionService.addAllQuestionSave(questionDto);

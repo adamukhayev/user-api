@@ -2,10 +2,17 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exeptions.GeneralTestApiException;
 import com.example.demo.exeptions.TestApiError;
-import com.example.demo.model.dto.SurveyDto;
+import com.example.demo.model.TypeEnum;
+import com.example.demo.model.dto.Answer;
+import com.example.demo.model.dto.ResponseAnswer;
+import com.example.demo.model.dto.ResponseDto;
+import com.example.demo.model.entity.AnswerEntity;
 import com.example.demo.model.entity.CustomerEntity;
+import com.example.demo.model.entity.QuestionEntity;
+import com.example.demo.model.entity.SurveyEntity;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.SurveyRepository;
 import com.example.demo.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +28,7 @@ public class CustomerImpl implements ICustomerService {
 
     private final CustomerRepository customerRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
     private final ModelMapper modelMapper;
     private final SurveyRepository surveyRepository;
 
@@ -40,12 +48,46 @@ public class CustomerImpl implements ICustomerService {
     }
 
     @Override
-    public List<SurveyDto> getResult(Long userId) {
+    public List<ResponseDto> getResult(Long userId) {
         List<CustomerEntity> customerEntities = customerRepository.findAllByUserId(userId);
-        List<SurveyDto> surveyDtos = new ArrayList<>();
+        List<ResponseDto> surveyDtos = new ArrayList<>();
         for (CustomerEntity e : customerEntities) {
-            SurveyDto dto = modelMapper.map(surveyRepository.findBySurveyId(e.getSurveyId()), SurveyDto.class);
-            surveyDtos.add(dto);
+            List<SurveyEntity> dto = surveyRepository.findAllBySurveyId(e.getSurveyId());
+            for (int i = 0; i < dto.size(); i++) {
+                ResponseDto resDto = new ResponseDto();
+                resDto.setDescription(dto.get(i).getTitle());
+                resDto.setTitle(dto.get(i).getDescription());
+                List<QuestionEntity> questionEntity = questionRepository
+                        .findAllBySurveyIdAndQuestionId(e.getSurveyId(), e.getQuestionId());
+                List<ResponseAnswer> answerList = new ArrayList<>();
+                for (int j = 0; j < questionEntity.size(); j++) {
+                    ResponseAnswer responseAnswer = new ResponseAnswer();
+                    responseAnswer.setQuestion(questionEntity.get(j).getQuestion());
+                    responseAnswer.setTitle(questionEntity.get(j).getTitle());
+                    if (questionEntity.get(j).getTitle().equals(TypeEnum.TWO.name())) {
+                        List<AnswerEntity> answerEntities = answerRepository
+                                .findAllByAnswerIdAndQuestionId(e.getAnswerId(), e.getQuestionId());
+                        List<Answer> answers = new ArrayList<>();
+                        for (int z = 0; z < answerEntities.size(); z++) {
+                            Answer answer = new Answer();
+                            answer.setAnswer(answerEntities.get(z).getAnswerText());
+                            answers.add(answer);
+                            responseAnswer.setAnswer(answers);
+                        }
+                    } else {
+                        List<Answer> answers = new ArrayList<>();
+                        AnswerEntity answerEntity = answerRepository
+                                .findByAnswerIdAndQuestionId(e.getAnswerId(), e.getQuestionId());
+                        Answer answer = new Answer();
+                        answer.setAnswer(answerEntity.getAnswerText());
+                        answers.add(answer);
+                        responseAnswer.setAnswer(answers);
+                    }
+                    answerList.add(responseAnswer);
+                    resDto.setResponseQuestions(answerList);
+                    surveyDtos.add(resDto);
+                }
+            }
         }
         return surveyDtos;
     }

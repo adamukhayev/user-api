@@ -19,7 +19,7 @@ CREATE TABLE main.users
 );
 
 INSERT INTO main.users (email, password, create_date, is_active, role)
-VALUES ('admin@mail.ru', '$2y$12$tU7DzgkkTzl2iBK88LC3O.ng6v5X.Yif.7izuhF8Lk29SqTfHZjOa',
+VALUES ('admin@mail.ru', '$2y$12$VqyPIlBTTxNAdJuv2i6w/OA3rEDuJVDffk9LRnb8SNA2F67mnLe/C',
         '2018-09-06 11:13:07.556', 'ACTIVE', 'ADMIN');
 
 CREATE SEQUENCE IF NOT EXISTS  main.survey_survey_id_seq
