@@ -24,7 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] AUTH_WHITELIST = {
-            // -- swagger ui
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -32,7 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/security",
             "/swagger-ui.html",
             "/webjars/**"
-            // other public endpoints of your API may be appended to this array
     };
 
     @Override
@@ -47,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/auth/register").permitAll()
                 .antMatchers("/user/answer").permitAll()
                 .antMatchers("/user/question").permitAll()
+                .antMatchers("/user/auth/register").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest()
                 .authenticated()

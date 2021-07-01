@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/user/auth")
 public class AuthUserController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @ApiOperation(value = "register")
     @PostMapping("/register")
