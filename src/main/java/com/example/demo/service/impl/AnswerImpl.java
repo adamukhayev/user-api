@@ -25,7 +25,11 @@ public class AnswerImpl implements IAnswerService {
 
     @Override
     public Long addAnswer(AnswerDto answerDto) {
-        return answerRepository.save(modelMapper.map(answerDto, AnswerEntity.class)).getAnswerId();
+        return answerRepository
+                .save(modelMapper.map(
+                        answerDto,
+                        AnswerEntity.class))
+                .getAnswerId();
     }
 
     @Override
@@ -40,7 +44,8 @@ public class AnswerImpl implements IAnswerService {
 
     @Override
     public Long updateAnswer(AnswerDto answerDto) {
-        if (answerRepository.existsByAnswerIdAndQuestionId(answerDto.getAnswerId(), answerDto.getQuestionId())) {
+        if (answerRepository.existsByAnswerId(
+                answerDto.getAnswerId())) {
             return addAnswer(answerDto);
         } else {
             throw new GeneralTestApiException(TestApiError.E500_ANSWER_NOT_FOUND);

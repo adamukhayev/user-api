@@ -26,8 +26,11 @@ public class QuestionImpl implements IQuestionService {
 
     @Override
     public Long addQuestion(QuestionDto questionDto) {
-        questionRepository.save(modelMapper.map(questionDto, QuestionEntity.class));
-        return questionDto.getQuestionId();
+        return questionRepository
+                .save(modelMapper.map(
+                        questionDto,
+                        QuestionEntity.class))
+                .getQuestionId();
     }
 
     @Override
@@ -35,8 +38,7 @@ public class QuestionImpl implements IQuestionService {
         QuestionEntity questionEntity = questionRepository.findByQuestionId(questionId);
         if (Objects.nonNull(questionEntity)) {
             questionEntity.setStatus(Status.DELETED);
-            questionRepository.save(questionEntity);
-            return questionId;
+            return questionRepository.save(questionEntity).getQuestionId();
         } else {
             throw new GeneralTestApiException(TestApiError.E500_QUESTION_NOT_FOUND);
         }
@@ -48,8 +50,7 @@ public class QuestionImpl implements IQuestionService {
         if (questionRepository.existsByQuestionId(questionDto.getQuestionId())) {
             QuestionEntity questionEntity = modelMapper.map(questionDto, QuestionEntity.class);
             questionEntity.setStatus(Status.ACTIVE);
-            questionRepository.save(questionEntity);
-            return questionDto.getQuestionId();
+            return questionRepository.save(questionEntity).getQuestionId();
         } else {
             throw new GeneralTestApiException(TestApiError.E500_QUESTION_NOT_FOUND);
         }
