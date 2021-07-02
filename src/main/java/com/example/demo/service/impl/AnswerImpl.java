@@ -7,6 +7,7 @@ import com.example.demo.model.entity.AnswerEntity;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.service.IAnswerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional
 public class AnswerImpl implements IAnswerService {
 
@@ -60,7 +62,11 @@ public class AnswerImpl implements IAnswerService {
             AnswerEntity answerEntity = modelMapper.map(d, AnswerEntity.class);
             entities.add(answerEntity);
         }
-        answerRepository.saveAll(entities);
+        try {
+            answerRepository.saveAll(entities);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 
 }

@@ -13,21 +13,20 @@ import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.SurveyRepository;
 import com.example.demo.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerImpl implements ICustomerService {
 
     private final CustomerRepository customerRepository;
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
-    private final ModelMapper modelMapper;
     private final SurveyRepository surveyRepository;
 
     @Override
@@ -52,56 +51,56 @@ public class CustomerImpl implements ICustomerService {
             throw new GeneralTestApiException(TestApiError.E500_NOT_FOUND);
         }
 
-        List<ResponseDto> responseDtos = customerEntities.stream().map(user -> {
-            ResponseDto responseDto = new ResponseDto();
-            surveyRepository.findAllBySurveyId(user.getSurveyId())
-                    .stream().map(surveyEntity -> {
-                responseDto.setDescription(surveyEntity.getDescription());
-                responseDto.setTitle(surveyEntity.getTitle());
-                List<ResponseAnswer> responseAnswers = questionRepository
-                        .findAllByQuestionId(user.getQuestionId())
-                        .stream()
-                        .map(questionEntity -> {
-                            ResponseAnswer responseAnswer = new ResponseAnswer();
-                            responseAnswer.setQuestion(questionEntity.getQuestion());
-                            responseAnswer.setTitle(questionEntity.getTitle());
-                            if (questionEntity.getQuestionType().equals(TypeEnum.TWO)) {
-                                List<Answer> answerList = answerRepository
-                                        .findAllByAnswerIdAndQuestionId(
-                                                user.getAnswerId(),
-                                                user.getQuestionId())
-                                        .stream().map(answerEntity -> {
-                                            Answer answers = new Answer();
-                                            answers.setAnswer(answerEntity.getAnswerText());
-                                            return answers;
-                                        }).collect(Collectors.toList());
-                                responseAnswer.setAnswer(answerList);
-                                return responseAnswer;
-                            } else {
-                                Answer answer = new Answer();
-                                List<Answer> answerList = answerRepository
-                                        .findAllByAnswerIdAndQuestionId(
-                                                user.getAnswerId(),
-                                                user.getQuestionId())
-                                        .stream()
-                                        .map(answerEntity -> {
-                                            if (Objects.isNull(answerEntity)) {
-                                                throw new GeneralTestApiException(TestApiError.E500_ANSWER_NOT_FOUND);
-                                            } else {
+        try {
+            List<ResponseDto> responseDtos = customerEntities.stream().map(user -> {
+                ResponseDto responseDto = new ResponseDto();
+                surveyRepository.findAllBySurveyId(user.getSurveyId())
+                        .stream().map(surveyEntity -> {
+                    responseDto.setDescription(surveyEntity.getDescription());
+                    responseDto.setTitle(surveyEntity.getTitle());
+                    List<ResponseAnswer> responseAnswers = questionRepository
+                            .findAllByQuestionId(user.getQuestionId())
+                            .stream()
+                            .map(questionEntity -> {
+                                ResponseAnswer responseAnswer = new ResponseAnswer();
+                                responseAnswer.setQuestion(questionEntity.getQuestion());
+                                responseAnswer.setTitle(questionEntity.getTitle());
+                                if (questionEntity.getQuestionType().equals(TypeEnum.TWO)) {
+                                    List<Answer> answerList = answerRepository
+                                            .findAllByAnswerIdAndQuestionId(
+                                                    user.getAnswerId(),
+                                                    user.getQuestionId())
+                                            .stream().map(answerEntity -> {
+                                                Answer answers = new Answer();
+                                                answers.setAnswer(answerEntity.getAnswerText());
+                                                return answers;
+                                            }).collect(Collectors.toList());
+                                    responseAnswer.setAnswer(answerList);
+                                    return responseAnswer;
+                                } else {
+                                    Answer answer = new Answer();
+                                    List<Answer> answerList = answerRepository
+                                            .findAllByAnswerIdAndQuestionId(
+                                                    user.getAnswerId(),
+                                                    user.getQuestionId())
+                                            .stream()
+                                            .map(answerEntity -> {
                                                 answer.setAnswer(answerEntity.getAnswerText());
-
                                                 return answer;
-                                            }
-                                        }).collect(Collectors.toList());
-                                responseAnswer.setAnswer(answerList);
-                                return responseAnswer;
-                            }
-                        }).collect(Collectors.toList());
-                responseDto.setResponseQuestions(responseAnswers);
+                                            }).collect(Collectors.toList());
+                                    responseAnswer.setAnswer(answerList);
+                                    return responseAnswer;
+                                }
+                            }).collect(Collectors.toList());
+                    responseDto.setResponseQuestions(responseAnswers);
+                    return responseDto;
+                }).collect(Collectors.toList());
                 return responseDto;
             }).collect(Collectors.toList());
-            return responseDto;
-        }).collect(Collectors.toList());
-        return responseDtos;
+            return responseDtos;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new GeneralTestApiException(TestApiError.E500_NOT_FOUND);
+        }
     }
 }

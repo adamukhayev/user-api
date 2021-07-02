@@ -8,6 +8,7 @@ import com.example.demo.model.entity.QuestionEntity;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.service.IQuestionService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @Transactional
+@Slf4j
 @Service
 public class QuestionImpl implements IQuestionService {
 
@@ -65,6 +67,10 @@ public class QuestionImpl implements IQuestionService {
             questionEntity.setStatus(Status.ACTIVE);
             entities.add(questionEntity);
         }
-        questionRepository.saveAll(entities);
+        try {
+            questionRepository.saveAll(entities);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }
