@@ -1,15 +1,15 @@
 package com.example.demo.security;
 
 import com.example.demo.model.Status;
+import com.example.demo.model.entity.RoleEntity;
 import com.example.demo.model.entity.UserEntity;
+import java.util.Collection;
+import java.util.List;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 @Data
 public class SecurityUser implements UserDetails {
@@ -61,14 +61,14 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUser(UserEntity userEntity){
+    public static UserDetails fromUser(UserEntity userEntity, RoleEntity roleEntity) {
         return new User(
                 userEntity.getEmail(), userEntity.getPassword(),
                 userEntity.getIsActive().equals(Status.ACTIVE),
                 userEntity.getIsActive().equals(Status.ACTIVE),
                 userEntity.getIsActive().equals(Status.ACTIVE),
                 userEntity.getIsActive().equals(Status.ACTIVE),
-                userEntity.getRole().getAuthorities()
+                roleEntity.getRole().getAuthorities()
         );
     }
 }

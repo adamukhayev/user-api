@@ -1,6 +1,9 @@
 package com.example.demo.security;
 
+import com.example.demo.exeptions.GeneralTestApiException;
+import com.example.demo.exeptions.TestApiError;
 import com.example.demo.model.entity.UserEntity;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +16,16 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User doesn't exists"));
-        return SecurityUser.fromUser(userEntity);
+                        new GeneralTestApiException(TestApiError.E500_NOT_FOUND,
+                                "User doesn't exists"));
+        var role = roleRepository.findByUserId(userEntity.getUserId());
+        return SecurityUser.fromUser(userEntity, role);
     }
 }

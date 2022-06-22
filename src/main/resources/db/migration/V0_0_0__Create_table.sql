@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS main;
 
 CREATE SEQUENCE IF NOT EXISTS  main.users_user_id_seq
-    START WITH 101
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -14,88 +14,27 @@ CREATE TABLE main.users
     email       VARCHAR                                                             NOT NULL,
     password    VARCHAR                                                             NOT NULL,
     create_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    role        VARCHAR(20)                                                         NOT NULL,
     is_active   VARCHAR(20)                                                         NOT NULL
 );
 
-INSERT INTO main.users (email, password, create_date, is_active, role)
+INSERT INTO main.users (email, password, create_date, is_active)
 VALUES ('admin@mail.ru', '$2y$12$VqyPIlBTTxNAdJuv2i6w/OA3rEDuJVDffk9LRnb8SNA2F67mnLe/C',
-        '2018-09-06 11:13:07.556', 'ACTIVE', 'ADMIN');
+        '2018-09-06 11:13:07.556', 'ACTIVE');
 
-CREATE SEQUENCE IF NOT EXISTS  main.survey_survey_id_seq
+CREATE SEQUENCE IF NOT EXISTS  main.roles_role_id_seq
     START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-CREATE TABLE main.survey
+CREATE TABLE main.roles
 (
-    survey_id   INTEGER DEFAULT nextval('main.survey_survey_id_seq'::regclass) PRIMARY KEY NOT NULL,
-    title       VARCHAR                                                                    NOT NULL,
-    description VARCHAR                                                                    NOT NULL,
-    create_date TIMESTAMP                                                                  NOT NULL,
-    end_date    TIMESTAMP                                                                  NOT NULL,
-    status      VARCHAR                                                                    NOT NULL
+    role_id INTEGER DEFAULT nextval('main.roles_role_id_seq'::regclass) NOT NULL,
+    role    VARCHAR                                                     NOT NULL,
+    user_id INTEGER                                                     NOT NULL,
+    FOREIGN KEY (user_id) references main.users (user_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS  main.question_question_id_seq
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-CREATE TABLE main.question
-(
-    question_id   INTEGER DEFAULT nextval('main.question_question_id_seq'::regclass) NOT NULL,
-    title         VARCHAR                                                            NOT NULL,
-    question      VARCHAR                                                            NOT NULL,
-    survey_id     INTEGER,
-    question_type VARCHAR                                                            NOT NULL,
-    status        VARCHAR                                                            NOT NULL,
-
-    CONSTRAINT question_pk PRIMARY KEY (question_id),
-    CONSTRAINT fk_survey_id_survey
-        FOREIGN KEY (survey_id)
-            REFERENCES main.survey (survey_id)
-);
-
-CREATE SEQUENCE IF NOT EXISTS  main.answer_answer_id_seq
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-CREATE TABLE main.answer
-(
-    answer_id   INTEGER DEFAULT nextval('main.answer_answer_id_seq'::regclass) NOT NULL,
-    answer_text VARCHAR                                                        NOT NULL,
-    question_id INTEGER,
-
-    CONSTRAINT answer_pk PRIMARY KEY (answer_id),
-    CONSTRAINT fk_question_id_question
-        FOREIGN KEY (question_id)
-            REFERENCES main.question (question_id)
-
-);
-
-CREATE SEQUENCE IF NOT EXISTS  main.customer_customer_id_seq
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-CREATE TABLE main.customer
-(
-
-    customer_id INTEGER DEFAULT nextval('main.customer_customer_id_seq'::regclass),
-    user_id     INTEGER,
-    survey_id   INTEGER,
-    answer_id   INTEGER,
-    question_id INTEGER,
-    answer_text VARCHAR
-
-)
+INSERT INTO main.roles(role, user_id)
+VALUES ('ADMIN', 100)

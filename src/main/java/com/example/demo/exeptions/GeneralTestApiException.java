@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GeneralTestApiException extends RuntimeException{
+public class GeneralTestApiException extends RuntimeException {
 
     @JsonProperty
     private TestApiError error;

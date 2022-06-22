@@ -38,12 +38,14 @@ dependencies {
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("io.springfox:springfox-swagger2:2.9.2") {
-		exclude module: 'mapstruct' // necessary in my case to not end up with multiple mapstruct versions
+		exclude module: 'mapstruct'
 	}
 	compile "io.springfox:springfox-bean-validators:2.9.2"
 	compile "io.springfox:springfox-swagger-ui:2.9.2"
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+	implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.21'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
 }
 
 test {

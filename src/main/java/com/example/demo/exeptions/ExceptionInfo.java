@@ -1,4 +1,4 @@
-package com.example.demo.model.dto;
+package com.example.demo.exeptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Answer {
+public class ExceptionInfo {
 
-    private String answer;
+    private String info;
+
 }

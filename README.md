@@ -18,10 +18,9 @@ Stop dev environment
 #### API usage
 
 ##### API swagger documentation
-1. http://localhost:8080/swagger-ui.html
+1. http://localhost:8081/swagger-ui.html
 2. Login: `admin@mail.ru`
-   Password: `admin`.
-   to get a token.
+   Password: `admin`. to get a token.
    
 3. administered token example:
    `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLnJ1Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjE3MzgzOTUxLCJleHAiOjE2MTc5ODg3NTF9.SjtBF7iCVxNKZpn-N5yuoBBm_QK5kbxAiaFvbuNOvxw`

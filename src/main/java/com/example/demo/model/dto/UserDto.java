@@ -1,27 +1,16 @@
 package com.example.demo.model.dto;
 
-import lombok.AllArgsConstructor;
+import com.example.demo.model.Role;
+import com.example.demo.model.Status;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@ToString
+@Builder
 public class UserDto {
 
-    private Long userId;
-
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String password;
-
-    @NotNull
-    private Date createDate;
-
+    private Status isActive;
+    private Role role;
 }

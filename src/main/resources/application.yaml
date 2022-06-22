@@ -2,11 +2,11 @@ spring:
   flyway:
     enabled: true
   application:
-    name: Test API
+    name: Users API
   datasource:
-    url: "jdbc:postgresql://localhost:5432/test?currentSchema=main"
+    url: "jdbc:postgresql://localhost:5432/users-api_db?currentSchema=main"
     username: "test"
     password: "123"
     driver-class-name: org.postgresql.Driver
 server:
-  port: 8080
+  port: 8081

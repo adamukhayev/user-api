@@ -2,21 +2,21 @@ version: '3'
 volumes:
   pgdata:
 services:
-  my-test-api:
+  users-api:
     build: ./db
-    container_name: test
+    container_name: users-api
     command: -c 'listen_addresses="*"'
     environment:
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=123
-      - POSTGRES_DB=test_db
+      - POSTGRES_DB=users-api_db
     restart: on-failure
     ports:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - test-api
+      - users-api
 
 networks:
-  test-api:
+  users-api:
