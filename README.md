@@ -1,4 +1,4 @@
-# Test  API
+# User  API
 ## Build instructions
 
   PostgresDB service - main database to store data
