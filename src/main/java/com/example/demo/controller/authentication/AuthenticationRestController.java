@@ -56,8 +56,8 @@ public class AuthenticationRestController {
                     new UsernamePasswordAuthenticationToken(request.getEmail(),
                             request.getPassword()));
             UserEntity userEntity = userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new GeneralTestApiException(TestApiError.E500_NOT_FOUND,
-                            TestApiError.E500_NOT_FOUND.toString()));
+                .orElseThrow(() -> new GeneralTestApiException(TestApiError.E404_NOT_FOUND,
+                    TestApiError.E404_NOT_FOUND.toString()));
 
             var role = roleRepository.findByUserId(userEntity.getUserId());
             String token = jwtTokenProvider.createToken(request.getEmail(),

@@ -23,8 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new GeneralTestApiException(TestApiError.E500_NOT_FOUND,
-                                "User doesn't exists"));
+                        new GeneralTestApiException(TestApiError.E404_NOT_FOUND,
+                            "User doesn't exists"));
         var role = roleRepository.findByUserId(userEntity.getUserId());
         return SecurityUser.fromUser(userEntity, role);
     }
